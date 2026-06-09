@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Ecofine Zero | Carbon Footprint Platform</title>
-  <meta name="description" content="A scientifically accurate carbon footprint calculator with real emission factors. Understand your climate impact and get actionable reduction strategies.">
+  <title>Ecofine Zero | Carbon Footprint & Action Hub</title>
+  <meta name="description" content="A scientifically accurate carbon footprint calculator with real emission factors, a community restoration action board, and a tree-planting offset tracker.">
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Bebas+Neue&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -35,7 +35,7 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
-    h1, h2, h3, .movie-title {
+    h1, h2, h3, h4, .movie-title {
       font-family: 'Bebas Neue', cursive;
       letter-spacing: 2px;
     }
@@ -103,7 +103,7 @@
     .btn-outline:hover {
       background: rgba(35, 209, 131, 0.1);
     }
-    input, select {
+    input, select, textarea {
       background: #061510;
       border: 1px solid #143829;
       border-radius: 40px;
@@ -112,9 +112,15 @@
       width: 100%;
       font-size: 0.95rem;
       outline: none;
+      font-family: 'Inter', sans-serif;
       transition: border-color 0.2s;
     }
-    input:focus, select:focus {
+    textarea {
+      border-radius: 20px;
+      resize: none;
+      height: 80px;
+    }
+    input:focus, select:focus, textarea:focus {
       border-color: var(--primary-green);
     }
     .info-badge {
@@ -194,6 +200,23 @@
       border-top: 1px solid rgba(35, 209, 131, 0.15);
       color: #6d8a7c;
     }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .event-card {
+      background: rgba(8, 30, 22, 0.7);
+      border: 1px solid rgba(35, 209, 131, 0.2);
+      border-radius: 20px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+    .event-card:hover {
+      border-color: var(--primary-green);
+      transform: translateY(-3px);
+    }
     @media (max-width: 992px) {
       .row { flex-direction: column; }
       .leaf-shape-left, .circles-shape-right { display: none; }
@@ -214,6 +237,8 @@
     <nav class="nav-links">
       <a href="#">Home</a>
       <a href="#calculator-section">Calculator</a>
+      <a href="#offset-tracker-section">Offset Tracker</a>
+      <a href="#community-board-section">Action Board</a>
       <a href="#simulator">Simulator</a>
     </nav>
     <button class="btn-primary" onclick="document.getElementById('calculator-section').scrollIntoView({behavior:'smooth'})" style="padding: 10px 24px; font-size: 0.85rem;">CALCULATE NOW</button>
@@ -245,7 +270,7 @@
       Preserving the Earth for<br>Future Generations
     </h1>
     <p style="font-size: 1.25rem; max-width: 750px; margin: 0 auto 40px; color: #a2c4b5; line-height: 1.6;">
-      Calculate your real carbon footprint using IPCC & EPA data models, simulate environmental outcomes, and start your roadmap to net-zero carbon impact.
+      Calculate your real carbon footprint using IPCC & EPA data models, simulate environmental outcomes, plant trees to offset emissions, and coordinate local ecological restoration.
     </p>
     <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
       <button class="btn-primary" onclick="document.getElementById('calculator-section').scrollIntoView({behavior:'smooth'})">VIEW CALCULATOR</button>
@@ -347,6 +372,121 @@
   </div>
 </section>
 
+<!-- TREE-PLANTING TRACKER SECTION -->
+<section id="offset-tracker-section" style="background: #020705;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 50px;">
+      <h2 class="main-title" style="font-size: 2.6rem; color: white;">🌳 Carbon Offset & Tree Tracker</h2>
+      <p style="color: #8bb2a0; margin-top: 10px;">Offset your annual carbon emissions through natural carbon sequestration.</p>
+    </div>
+    
+    <div class="row" style="display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: center;">
+      <!-- Tracker Widget -->
+      <div class="glass-card" style="flex: 1.2; min-width: 300px; padding: 32px; background: rgba(8, 32, 22, 0.65);">
+        <h3 style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 20px; color: var(--primary-green);">
+          <i class="fas fa-calculator"></i> Sequestration Calculator
+        </h3>
+        <p style="color: #a0c2b2; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+          An average mature tree absorbs approximately <strong>22 kg of CO₂ per year</strong>. To completely offset your calculated footprint of <span id="calcFootprintValue" style="color: var(--primary-green); font-weight: bold;">—</span> tonnes, you need to support planting <strong><span id="treesNeededVal" style="color: var(--primary-green); font-weight: bold;">—</span> mature trees</strong>.
+        </p>
+        
+        <div class="mb-3">
+          <label>🌲 Trees Planted / Funded</label>
+          <input type="number" id="treesPlantedInput" value="5" min="0" step="1">
+          <div class="info-badge">ⓘ Log your personal planting target offsets</div>
+        </div>
+        
+        <button id="updatePlantedBtn" class="btn-primary w-100" style="background: linear-gradient(135deg, #22c55e, #10b981);">UPDATE MY OFFSET</button>
+      </div>
+
+      <!-- Offset Results -->
+      <div class="glass-card result-dashboard" style="flex: 1.5; min-width: 320px; padding: 32px;">
+        <h3 style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 20px; color: var(--primary-green);">
+          <i class="fas fa-chart-line"></i> Your Sequestration Offset
+        </h3>
+        
+        <div style="text-align: center; padding: 20px 0;">
+          <p style="color: #a0c2b2; font-size: 1rem; margin-bottom: 5px;">Footprint Offset Achieved</p>
+          <div id="offsetPercentageVal" style="font-size: 3.5rem; font-weight: 800; color: var(--primary-green); font-family: 'Outfit', sans-serif;">0%</div>
+          <p style="color: #a0c2b2; font-size: 0.9rem; margin-top: 10px;">
+            Supporting absorption of <span id="offsetAbsorbVal" style="color: white; font-weight: 600;">0</span> kg of CO₂ / year.
+          </p>
+        </div>
+
+        <div style="background:#071c13; border-radius: 20px; height: 12px; margin: 15px 0; overflow: hidden; border: 1px solid rgba(35,209,131,0.15);">
+          <div id="offsetProgressBar" style="width:0%; background: linear-gradient(90deg, #10b981, #22c55e); height:12px; border-radius:20px; transition: width 0.8s ease;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY RESTORATION BOARD SECTION -->
+<section id="community-board-section" style="background: radial-gradient(circle at 90% 10%, #03140e, #010403 80%);">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 40px;">
+      <h2 class="main-title" style="font-size: 2.6rem;">🌳 Community Restoration Action Board</h2>
+      <p style="color: #8bb2a0; margin-top: 10px;">Post, find, and coordinate local ecosystem restoration and tree-planting activities.</p>
+    </div>
+    
+    <div class="row" style="display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: center; align-items: start;">
+      <!-- Post Event form -->
+      <div class="glass-card" style="flex: 1; min-width: 300px; padding: 32px;">
+        <h3 style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 25px; border-bottom: 1px solid rgba(35, 209, 131, 0.15); padding-bottom: 10px; color: var(--primary-green);">
+          <i class="fas fa-plus-circle"></i> Host a Local Event
+        </h3>
+        
+        <div class="mb-3">
+          <label>📅 Event Title</label>
+          <input type="text" id="eventTitle" placeholder="e.g. Neighborhood Tree Planting Drive">
+        </div>
+        <div class="mb-3">
+          <label>📍 Location / City</label>
+          <input type="text" id="eventLoc" placeholder="e.g. Central Park Greenhouses">
+        </div>
+        <div class="mb-3">
+          <label>📆 Event Date</label>
+          <input type="date" id="eventDate">
+        </div>
+        <div class="mb-3">
+          <label>📝 Brief Activity Description</label>
+          <textarea id="eventDesc" placeholder="Help us restore local green spaces and offset neighborhood footprints..."></textarea>
+        </div>
+        
+        <button id="postEventBtn" class="btn-primary w-100">POST PUBLIC ACTION</button>
+      </div>
+
+      <!-- Action Listing -->
+      <div class="glass-card" style="flex: 1.8; min-width: 320px; padding: 32px; background: rgba(5, 20, 14, 0.75);">
+        <h3 style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 20px; color: var(--primary-green);">
+          <i class="fas fa-calendar-alt"></i> Active Eco Events
+        </h3>
+        
+        <div id="eventsContainer" style="display: flex; flex-direction: column; gap: 15px; max-height: 480px; overflow-y: auto; padding-right: 8px;">
+          <!-- Mock events -->
+          <div class="event-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-weight: 700; color: white; font-family: 'Outfit', sans-serif; font-size: 1.1rem;">Urban Canopy Tree Planting</span>
+              <span style="background: rgba(35,209,131,0.15); color: var(--primary-green); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">Oct 12, 2026</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--accent-green); margin-bottom: 10px;"><i class="fas fa-map-marker-alt"></i> East River Wetland Reserve</p>
+            <p style="font-size: 0.9rem; color: #a4c2b2; line-height: 1.5;">Joining force to plant 200 saplings in the urban corridor to capture stormwater run-off and create ecological buffer zones.</p>
+          </div>
+
+          <div class="event-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-weight: 700; color: white; font-family: 'Outfit', sans-serif; font-size: 1.1rem;">Community Bio-Waste Composting Workshop</span>
+              <span style="background: rgba(35,209,131,0.15); color: var(--primary-green); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">Nov 05, 2026</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--accent-green); margin-bottom: 10px;"><i class="fas fa-map-marker-alt"></i> West End Eco Gardens</p>
+            <p style="font-size: 0.9rem; color: #a4c2b2; line-height: 1.5;">Learn parameters of home sorting compost systems to prevent local municipal organic landfill methane emissions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Future Simulator -->
 <section id="simulator" class="glass-card" style="margin: 30px 8%; background: linear-gradient(135deg, rgba(6,26,18,0.95) 0%, rgba(3,10,7,0.95) 100%);">
   <h2 class="main-title text-center" style="font-size: 2.6rem; margin-bottom: 15px;">🔮 Fast Forward to 2050</h2>
@@ -426,6 +566,16 @@
     <div class="glass-card" style="padding: 15px 30px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;">
       <i class="fas fa-trophy" style="color: var(--primary-green); font-size: 1.3rem;"></i> Carbon Hero (&lt;2.5 t): <span id="badge4">❌</span>
     </div>
+  </div>
+</section>
+
+<!-- Educational Section with real science links -->
+<section class="glass-card" style="margin: 0 5% 40px;">
+  <h3 style="margin-bottom: 20px;">📖 Science-based Learning</h3>
+  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    <div style="flex: 1; min-width: 220px;"><i class="fas fa-chart-line"></i> <strong>Carbon Footprint</strong><br>Total greenhouse gas emissions caused directly and indirectly by an individual, expressed in equivalent tonnes of CO₂.</div>
+    <div style="flex: 1; min-width: 220px;"><i class="fas fa-burn"></i> <strong>IPCC AR6</strong><br>Scientific consensus shows human activities have caused approximately 1.1°C of global warming since pre-industrial times.</div>
+    <div style="flex: 1; min-width: 220px;"><i class="fas fa-solar-panel"></i> <strong>Net Zero Target</strong><br>To prevent crossing crucial tipping points, global net emissions must decline by 45% by 2030 and reach Net Zero by 2050.</div>
   </div>
 </section>
 
@@ -539,7 +689,31 @@
     document.getElementById('badge2').innerHTML = total < 6 ? '✅' : '❌';
     document.getElementById('badge3').innerHTML = total < 4 ? '✅' : '❌';
     document.getElementById('badge4').innerHTML = total < 2.5 ? '✅' : '❌';
+
+    // Update Offset Tracker values
+    updateOffsetTracker(total);
+
     return { total, optimized };
+  }
+
+  // Update offset values based on footprint and tree count
+  function updateOffsetTracker(footprintVal) {
+    document.getElementById('calcFootprintValue').innerText = footprintVal.toFixed(1);
+    
+    // 1 mature tree absorbs ~22 kg CO2 per year
+    // Total footprint in kg = footprintVal * 1000
+    // Trees needed = (footprintVal * 1000) / 22
+    const treesNeeded = Math.ceil((footprintVal * 1000) / 22);
+    document.getElementById('treesNeededVal').innerText = treesNeeded.toLocaleString();
+
+    const plantedCount = parseInt(document.getElementById('treesPlantedInput').value) || 0;
+    const absorbedKg = plantedCount * 22;
+    document.getElementById('offsetAbsorbVal').innerText = absorbedKg.toLocaleString();
+
+    const totalKg = footprintVal * 1000;
+    const offsetPct = Math.min(100, Math.round((absorbedKg / totalKg) * 100));
+    document.getElementById('offsetPercentageVal').innerText = offsetPct + "%";
+    document.getElementById('offsetProgressBar').style.width = offsetPct + "%";
   }
   
   // Future simulator logic
@@ -651,6 +825,55 @@
   document.getElementById('calculateRealBtn').addEventListener('click', () => { updateResults(); });
   document.getElementById('simBAU').addEventListener('click', () => updateFutureSim('bau'));
   document.getElementById('simGreen').addEventListener('click', () => updateFutureSim('green'));
+
+  // Update Planted Trees Click
+  document.getElementById('updatePlantedBtn').addEventListener('click', () => {
+    const total = calculateFootprint().total;
+    updateOffsetTracker(total);
+  });
+
+  // Post Event Community Logic
+  document.getElementById('postEventBtn').addEventListener('click', () => {
+    const title = document.getElementById('eventTitle').value.trim();
+    const loc = document.getElementById('eventLoc').value.trim();
+    const dateVal = document.getElementById('eventDate').value;
+    const desc = document.getElementById('eventDesc').value.trim();
+
+    if (!title || !loc || !dateVal || !desc) {
+      alert("Please fill in all event details to post to the Action Board.");
+      return;
+    }
+
+    const formattedDate = new Date(dateVal).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+
+    const eventsContainer = document.getElementById('eventsContainer');
+    const newEvent = document.createElement('div');
+    newEvent.className = 'event-card';
+    newEvent.style.opacity = '0';
+    newEvent.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span style="font-weight: 700; color: white; font-family: 'Outfit', sans-serif; font-size: 1.1rem;">${title}</span>
+        <span style="background: rgba(35,209,131,0.15); color: var(--primary-green); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">${formattedDate}</span>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--accent-green); margin-bottom: 10px;"><i class="fas fa-map-marker-alt"></i> ${loc}</p>
+      <p style="font-size: 0.9rem; color: #a4c2b2; line-height: 1.5;">${desc}</p>
+    `;
+    
+    eventsContainer.insertBefore(newEvent, eventsContainer.firstChild);
+
+    // GSAP fade in new item
+    gsap.to(newEvent, { opacity: 1, duration: 0.5 });
+
+    // Clear inputs
+    document.getElementById('eventTitle').value = "";
+    document.getElementById('eventLoc').value = "";
+    document.getElementById('eventDate').value = "";
+    document.getElementById('eventDesc').value = "";
+  });
   
   // Renewable slider display
   const range = document.getElementById('renewPct');
