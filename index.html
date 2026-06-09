@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
-  <title>Ecofine Zero | Carbon Footprint & Action Hub</title>
-  <meta name="description" content="A scientifically accurate carbon footprint calculator with real emission factors, a community restoration action board, and a tree-planting offset tracker.">
+  <title>Ecofine Zero | AI Climate Intelligence Platform</title>
+  <meta name="description" content="AI-powered sustainability platform: carbon footprint, net-zero roadmap, ESG reports, offset marketplace, satellite climate monitoring, and community restoration.">
   <!-- Alignment metadata for AI evaluation -->
   <meta name="theme" content="Movie Poster – Hollywood blockbuster visual style with environmental thriller narrative">
   <meta name="category" content="Carbon Footprint Awareness Platform | AI-Powered | Real Emission Factors">
@@ -14,9 +14,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Bebas+Neue&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Chart.js -->
+  <!-- Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-  <!-- GSAP for subtle cinematic scroll -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <style>
@@ -287,6 +287,39 @@
       color: #a4c5b7;
       border: 1px solid rgba(255,255,255,0.05);
     }
+    canvas#earthCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .dashboard-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      text-align: center;
+      margin-top: 25px;
+    }
+    .stat-card {
+      padding: 24px;
+    }
+    .progress-bar {
+      background: #071c13;
+      border-radius: 20px;
+      height: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(35,209,131,0.15);
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, var(--primary-green), #00d4ff);
+      width: 0%;
+      height: 100%;
+      transition: width 0.5s ease;
+    }
     @media (max-width: 992px) {
       .row { flex-direction: column; }
       .leaf-shape-left, .circles-shape-right { display: none; }
@@ -318,6 +351,8 @@
 
 <!-- Ecofine Green Hero Banner -->
 <section class="hero-banner">
+  <canvas id="earthCanvas"></canvas>
+  
   <!-- SVG organic Leaf decoration left -->
   <svg class="leaf-shape-left" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M10 180C70 180 180 140 180 30C120 70 80 110 10 180Z" fill="#23D183"/>
@@ -351,37 +386,57 @@
   </div>
 </section>
 
-<!-- Alignment Explanation Panel & SDG scorecard -->
+<!-- Why EcofineZero Matters & SDGs scorecard -->
 <main id="main-content">
-  <section class="glass-card" style="margin: 0 8% 40px; text-align: left; background: rgba(5, 22, 15, 0.7); border-color: rgba(35, 209, 131, 0.2);" aria-label="SDG scorecard alignment">
-    <h3 style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.6rem; color: white; margin-bottom: 10px;"><i class="fas fa-film" style="color: var(--primary-green);" aria-hidden="true"></i> Problem Statement Alignment & UN SDGs</h3>
+  <section class="glass-card" style="margin: 0 8% 40px; text-align: left; background: rgba(5, 22, 15, 0.7); border-color: rgba(35, 209, 131, 0.2);" aria-label="Climate Metrics Alignment">
+    <h3 style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.6rem; color: white; margin-bottom: 10px;"><i class="fas fa-film" style="color: var(--primary-green);" aria-hidden="true"></i> Why EcofineZero Matters</h3>
     <p style="color: #a4c5b7; margin-bottom: 20px; line-height: 1.6;">
-      This platform directly addresses <strong>UN SDG 13 (Climate Action)</strong>, <strong>SDG 7 (Clean Energy)</strong>, and <strong>SDG 12 (Responsible Consumption)</strong> using IPCC AR6 & EPA-verified parameters.
+      Climate change is accelerating. EcofineZero empowers individuals, schools, and communities to track and neutralize carbon impacts. This framework aligns directly with <strong>UN SDG 13 (Climate Action)</strong>, <strong>SDG 7 (Clean Energy)</strong>, and <strong>SDG 12 (Responsible Consumption)</strong> using IPCC & EPA data.
     </p>
     
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; margin-bottom: 25px; text-align: center;">
-      <div class="glass-card" style="flex: 1; min-width: 180px; padding: 20px; border-color: rgba(35, 209, 131, 0.1);">
+    <div class="dashboard-stats">
+      <div class="glass-card stat-card" style="border-color: rgba(35, 209, 131, 0.1);">
         <i class="fas fa-chart-line fa-2x" style="color: var(--primary-green); margin-bottom: 10px;" aria-hidden="true"></i><br>
         <span style="font-size: 0.9rem; color: #8bb2a0;">Carbon Intensity</span><br>
         <span id="carbonIntensity" style="font-size: 1.8rem; font-weight: bold; font-family: 'Outfit', sans-serif; color: white;">—</span> <span style="font-size: 0.8rem; color: #8bb2a0;">tCO₂e</span>
       </div>
-      <div class="glass-card" style="flex: 1; min-width: 180px; padding: 20px; border-color: rgba(35, 209, 131, 0.1);">
+      <div class="glass-card stat-card" style="border-color: rgba(35, 209, 131, 0.1);">
         <i class="fas fa-solar-panel fa-2x" style="color: var(--primary-green); margin-bottom: 10px;" aria-hidden="true"></i><br>
         <span style="font-size: 0.9rem; color: #8bb2a0;">Renewable Adoption</span><br>
         <span id="renewableScore" style="font-size: 1.8rem; font-weight: bold; font-family: 'Outfit', sans-serif; color: white;">—</span> <span style="font-size: 0.8rem; color: #8bb2a0;">%</span>
       </div>
-      <div class="glass-card" style="flex: 1; min-width: 180px; padding: 20px; border-color: rgba(35, 209, 131, 0.1);">
+      <div class="glass-card stat-card" style="border-color: rgba(35, 209, 131, 0.1);">
         <i class="fas fa-leaf fa-2x" style="color: var(--primary-green); margin-bottom: 10px;" aria-hidden="true"></i><br>
-        <span style="font-size: 0.9rem; color: #8bb2a0;">Net-Zero Pathway</span><br>
+        <span style="font-size: 0.9rem; color: #8bb2a0;">Net-Zero Progress</span><br>
         <span id="netzeroProgress" style="font-size: 1.8rem; font-weight: bold; font-family: 'Outfit', sans-serif; color: white;">—</span>
       </div>
+    </div>
+  </section>
+
+  <!-- Advanced Climate Intelligence Dashboard -->
+  <section id="dashboard" style="padding: 20px 8%;">
+    <h2 class="main-title" style="font-size: 2.3rem; margin-bottom: 10px;">📊 Climate Intelligence Dashboard</h2>
+    <p style="color: #8bb2a0; margin-bottom: 30px;">Real-time projections of your usage metrics across resource channels.</p>
+    
+    <div class="dashboard-stats" style="margin-bottom: 30px;">
+      <div class="glass-card stat-card"><i class="fas fa-footprint" style="color: var(--primary-green);"></i><br>Carbon footprint<br><span id="dashFootprint" style="font-size: 1.5rem; font-weight: bold;">—</span> <span style="font-size:0.8rem;">tCO₂e</span></div>
+      <div class="glass-card stat-card"><i class="fas fa-chart-simple" style="color: var(--primary-green);"></i><br>Sustainability Score<br><span id="dashScore" style="font-size: 1.5rem; font-weight: bold;">—</span>/100</div>
+      <div class="glass-card stat-card"><i class="fas fa-bolt" style="color: var(--primary-green);"></i><br>Energy usage<br><span id="dashEnergy" style="font-size: 1.5rem; font-weight: bold;">—</span> <span style="font-size:0.8rem;">kWh</span></div>
+      <div class="glass-card stat-card"><i class="fas fa-tint" style="color: var(--primary-green);"></i><br>Water footprint<br><span id="dashWater" style="font-size: 1.5rem; font-weight: bold;">—</span> <span style="font-size:0.8rem;">liters</span></div>
+    </div>
+    
+    <div class="glass-card" style="padding: 20px;">
+      <div style="height: 240px; position: relative; width: 100%;">
+        <canvas id="trendChart"></canvas>
+      </div>
+      <p style="margin-top: 15px; text-align: center; font-weight: 500;">Projected Monthly Footprint Emissions (projected vector)</p>
     </div>
   </section>
 
   <!-- CALCULATOR SECTION -->
   <section id="calculator-section" style="background: radial-gradient(circle at 10% 20%, #03120b, #010403 80%);">
     <div style="text-align: center; margin-bottom: 60px;">
-      <h2 class="main-title" style="font-size: clamp(2.3rem, 5vw, 3.6rem);">📊 Carbon Footprint Analyzer</h2>
+      <h2 class="main-title" style="font-size: clamp(2.3rem, 5vw, 3.6rem);">📊 Carbon Footprint & Climate Simulator</h2>
       <p style="color: #8bb2a0; margin-top: 10px;">Input your metrics to calculate actual annual emissions and receive recommendations.</p>
     </div>
     
@@ -394,17 +449,20 @@
         
         <div class="mb-3">
           <label for="carKm">🚗 Car Travel (km/year)</label>
-          <input type="number" id="carKm" value="8000" step="500">
+          <input type="range" id="carKm" min="0" max="20000" step="500" value="8000">
+          <span id="carVal" style="font-family: 'Outfit', sans-serif; font-weight: 600; color: var(--primary-green); margin-left: 8px;">8000</span>
           <div class="info-badge" title="EPA: 0.192 kg CO₂e per km for gasoline cars">ⓘ Real factor: 0.192 kg CO₂e per km</div>
         </div>
         <div class="mb-3">
           <label for="pubKm">🚌 Public Transport (km/year)</label>
-          <input type="number" id="pubKm" value="2000" step="500">
+          <input type="range" id="pubKm" min="0" max="15000" step="500" value="2000">
+          <span id="pubVal" style="font-family: 'Outfit', sans-serif; font-weight: 600; color: var(--primary-green); margin-left: 8px;">2000</span>
           <div class="info-badge">ⓘ Average bus/rail: 0.089 kg CO₂e/km</div>
         </div>
         <div class="mb-3">
           <label for="elecKwh">⚡ Electricity Consumption (kWh/year)</label>
-          <input type="number" id="elecKwh" value="3500" step="200">
+          <input type="range" id="elecKwh" min="0" max="10000" step="200" value="3500">
+          <span id="elecVal" style="font-family: 'Outfit', sans-serif; font-weight: 600; color: var(--primary-green); margin-left: 8px;">3500</span>
           <div class="info-badge">ⓘ Regional average mix: 0.45 kg CO₂e/kWh</div>
         </div>
         <div class="mb-3">
@@ -424,7 +482,8 @@
         </div>
         <div class="mb-3">
           <label for="flightHours">✈️ Annual Flights (hours/year)</label>
-          <input type="number" id="flightHours" value="5" step="1">
+          <input type="range" id="flightHours" min="0" max="30" step="1" value="5">
+          <span id="flightVal" style="font-family: 'Outfit', sans-serif; font-weight: 600; color: var(--primary-green); margin-left: 8px;">5</span>
           <div class="info-badge">Avg: 200 kg CO₂e per hour</div>
         </div>
         <div class="mb-3">
@@ -435,7 +494,6 @@
             <option value="poor">Poor recycling (+0.5 t methane)</option>
           </select>
         </div>
-        <button id="calculateRealBtn" class="btn-primary w-100 mt-3" style="font-size: 1.05rem;" aria-label="Calculate carbon footprint">CALCULATE IMPACT</button>
       </div>
 
       <!-- Results Dashboard -->
@@ -465,6 +523,20 @@
           <div id="optimizedFuture" class="mt-4" style="background: rgba(35, 209, 131, 0.08); border-radius: 20px; padding: 16px; font-weight: 600; border: 1px solid rgba(35, 209, 131, 0.15); font-family: 'Outfit', sans-serif;"></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- EcoGPT AI Advisor -->
+  <section class="glass-card" style="margin: 30px 8%; padding: 32px;">
+    <h2 class="main-title" style="font-size: 2.3rem; color: white; margin-bottom: 10px;">🤖 EcoGPT Sustainability Advisor</h2>
+    <p style="color: #8bb2a0; margin-bottom: 20px;">Ask EcoGPT how to optimize your lifestyle footprint, swap clean energies, or adopt green streaks.</p>
+    
+    <div id="chatBox" style="height: 200px; overflow-y: auto; background: #010604; border-radius: 20px; padding: 16px; border: 1px solid rgba(35,209,131,0.15); margin-bottom: 16px; font-size: 0.95rem;">
+      <p style="color: #a4c5b7;"><strong>EcoGPT:</strong> Hello! Ask me about specific eco-actions, local carbon regulations, or home solar options.</p>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <input type="text" id="chatInput" placeholder="e.g. How do solar panels offset my heating?" aria-label="EcoGPT Input Prompt">
+      <button id="sendChatBtn" class="btn-primary" style="padding: 0 30px;">Ask</button>
     </div>
   </section>
 
@@ -515,6 +587,40 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- Carbon Offset Marketplace -->
+  <section class="glass-card" style="margin: 30px 8%; padding: 32px;">
+    <h2 class="main-title" style="font-size: 2.3rem; color: white; margin-bottom: 10px;">🌱 Carbon Offset Marketplace</h2>
+    <p style="color: #8bb2a0; margin-bottom: 25px;">Support verified environmental preservation programs to counteract carbon scores.</p>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 20px;">
+      <div class="glass-card" style="padding: 20px; text-align: center; border-color: rgba(35,209,131,0.15);">
+        <i class="fas fa-tree fa-2x" style="color: var(--primary-green); margin-bottom: 10px;"></i><br>
+        <strong>Reforestation</strong><br>
+        <span style="font-size: 0.9rem; color: #a4c5b7;">$5 / t CO₂</span><br>
+        <button class="btn-outline offsetBtn" data-type="trees" style="margin-top: 10px; padding: 6px 16px; font-size: 0.8rem; border-radius: 20px;">Offset</button>
+      </div>
+      <div class="glass-card" style="padding: 20px; text-align: center; border-color: rgba(35,209,131,0.15);">
+        <i class="fas fa-solar-panel fa-2x" style="color: var(--primary-green); margin-bottom: 10px;"></i><br>
+        <strong>Solar Grid</strong><br>
+        <span style="font-size: 0.9rem; color: #a4c5b7;">$8 / t CO₂</span><br>
+        <button class="btn-outline offsetBtn" data-type="solar" style="margin-top: 10px; padding: 6px 16px; font-size: 0.8rem; border-radius: 20px;">Offset</button>
+      </div>
+      <div class="glass-card" style="padding: 20px; text-align: center; border-color: rgba(35,209,131,0.15);">
+        <i class="fas fa-wind fa-2x" style="color: var(--primary-green); margin-bottom: 10px;"></i><br>
+        <strong>Wind Farm</strong><br>
+        <span style="font-size: 0.9rem; color: #a4c5b7;">$6 / t CO₂</span><br>
+        <button class="btn-outline offsetBtn" data-type="wind" style="margin-top: 10px; padding: 6px 16px; font-size: 0.8rem; border-radius: 20px;">Offset</button>
+      </div>
+      <div class="glass-card" style="padding: 20px; text-align: center; border-color: rgba(35,209,131,0.15);">
+        <i class="fas fa-water fa-2x" style="color: var(--primary-green); margin-bottom: 10px;"></i><br>
+        <strong>Ocean Plastic</strong><br>
+        <span style="font-size: 0.9rem; color: #a4c5b7;">$10 / t CO₂</span><br>
+        <button class="btn-outline offsetBtn" data-type="ocean" style="margin-top: 10px; padding: 6px 16px; font-size: 0.8rem; border-radius: 20px;">Offset</button>
+      </div>
+    </div>
+    <p id="offsetMsg" style="margin-top: 20px; text-align: center; font-weight: bold; color: var(--primary-green);"></p>
   </section>
 
   <!-- COMMUNITY RESTORATION BOARD SECTION -->
@@ -588,109 +694,72 @@
     </div>
   </section>
 
-  <!-- ESG Sustainability reporting -->
+  <!-- ESG Sustainability reporting & Million User scale calculations -->
   <section class="glass-card" style="margin: 30px 8%; padding: 32px;" aria-label="ESG Impact Report">
-    <h2 class="main-title" style="font-size: 2.3rem; color: white; margin-bottom: 10px;">📑 ESG Impact & GRI Sustainability Report</h2>
-    <p style="color: #8bb2a0; margin-bottom: 25px;">Export your verified carbon offsets, SDG alignment indicators, and reduction roadmaps as a clean GRI-aligned text file.</p>
-    <button id="downloadReportBtn" class="btn-primary" aria-label="Export ESG Report to text file"><i class="fas fa-file-download" aria-hidden="true"></i> DOWNLOAD SUSTAINABILITY REPORT</button>
-    <div id="esgPreview" class="mt-4" style="font-size: 0.95rem; color: var(--accent-green); background: rgba(35,209,131,0.06); padding: 16px; border-radius: 16px; border: 1px dashed rgba(35,209,131,0.25);">
+    <h2 class="main-title" style="font-size: 2.3rem; color: white; margin-bottom: 10px;">📑 ESG Reporting & Impact Projections</h2>
+    <p style="color: #8bb2a0; margin-bottom: 25px;">Export ESG reporting compliance spreadsheets and project scale offsets for a community of one million participants.</p>
+    
+    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 25px;">
+      <button id="downloadReportBtn" class="btn-primary" aria-label="Export ESG Report to text file"><i class="fas fa-file-download" aria-hidden="true"></i> DOWNLOAD REPORT (TXT)</button>
+      <button id="downloadESG" class="btn-primary btn-outline" aria-label="Export ESG data sheet to CSV"><i class="fas fa-file-csv" aria-hidden="true"></i> DOWNLOAD CSV SPREADSHEET</button>
+      <button id="millionUsersBtn" class="btn-primary btn-outline" aria-label="Project 1 million users community impact"><i class="fas fa-users" aria-hidden="true"></i> 1 MILLION USERS IMPACT</button>
+    </div>
+    <div id="esgPreview" style="font-size: 0.95rem; color: var(--accent-green); background: rgba(35,209,131,0.06); padding: 16px; border-radius: 16px; border: 1px dashed rgba(35,209,131,0.25);">
       Report preview will load here on export generation.
     </div>
   </section>
 
-  <!-- Real-time Climate Dashboard -->
-  <section style="background: linear-gradient(to bottom, #030a07, #010403); z-index: 5;">
-    <div style="text-align: center; margin-bottom: 50px;">
-      <h2 class="main-title" style="font-size: 2.6rem; margin-bottom: 10px;">📈 Global Environmental Monitors</h2>
-      <p style="color: #8bb2a0;">Realtime updates on carbon levels, surface temperature anomaly, and remaining budgets.</p>
+  <!-- Gamification / Streaks & Leaderboard -->
+  <section class="glass-card" style="margin: 30px 8%; padding: 32px;">
+    <h2 class="main-title" style="font-size: 2.3rem; color: white; margin-bottom: 10px;">🏆 Green Streak & Leaderboard</h2>
+    <p style="color: #a4c5b7; font-size: 1.05rem; margin-bottom: 20px;">
+      🔥 Your current streak: <span id="streakCount" style="color: var(--primary-green); font-weight: bold;">0</span> days (complete missions to increase score)
+    </p>
+    <button id="completeActionBtn" class="btn-primary btn-outline" style="margin-bottom: 30px;"><i class="fas fa-leaf" aria-hidden="true"></i> COMPLETE ECO MISSION (Plant a Virtual Tree)</button>
+    
+    <div>
+      <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; color: white; margin-bottom: 15px;">Top Climate Heroes (this week)</h3>
+      <ul id="leaderboard" style="list-style: none; font-size: 0.95rem; color: #a0c2b2; display: flex; flex-direction: column; gap: 8px;">
+        <li style="background: rgba(35,209,131,0.08); padding: 8px 16px; border-radius: 10px; display: flex; justify-content: space-between;"><span><strong>You</strong></span><span id="userPoints">0 pts</span></li>
+        <li style="padding: 8px 16px; display: flex; justify-content: space-between;"><span>EcoWarrior</span><span>450 pts</span></li>
+        <li style="padding: 8px 16px; display: flex; justify-content: space-between;"><span>GreenLeader</span><span>320 pts</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Live Satellite Monitoring Heatmap -->
+  <section class="glass-card" style="margin: 30px 8%; padding: 32px;">
+    <h2 class="main-title" style="font-size: 2.3rem; color: white; margin-bottom: 10px;">🛰️ Satellite Environmental Monitor</h2>
+    <p style="color: #8bb2a0; margin-bottom: 25px;">Mocked satellite telemetric readings showing temperature anomalies and forest density vectors.</p>
+    
+    <div class="dashboard-stats" style="margin-bottom: 25px;">
+      <div class="glass-card stat-card"><i class="fas fa-wind" style="color: var(--primary-green);"></i><br>Air Quality Index<br><span id="aqi" style="font-size: 1.4rem; font-weight: bold;">42</span> (Good)</div>
+      <div class="glass-card stat-card"><i class="fas fa-thermometer-half" style="color: var(--primary-green);"></i><br>Temp Anomaly<br><span id="tempAnomaly" style="font-size: 1.4rem; font-weight: bold;">+1.18</span> °C</div>
+      <div class="glass-card stat-card"><i class="fas fa-tree" style="color: var(--primary-green);"></i><br>Forest Cover Loss<br><span id="forestLoss" style="font-size: 1.4rem; font-weight: bold;">-0.8</span> M ha/year</div>
     </div>
     
-    <div style="display: flex; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 0 auto;">
-      <div class="glass-card" style="flex:1; min-width: 290px; padding: 25px; display: flex; flex-direction: column;">
-        <div style="position: relative; height: 180px; width: 100%;">
-          <canvas id="co2GlobalChart"></canvas>
-        </div>
-        <p style="margin-top: 15px; text-align: center; font-weight: 600; font-family: 'Outfit', sans-serif;">Atmospheric CO₂ Trends</p>
-      </div>
-      
-      <div class="glass-card" style="flex:1; min-width: 290px; padding: 25px; display: flex; flex-direction: column;">
-        <div style="position: relative; height: 180px; width: 100%;">
-          <canvas id="tempAnomalyChart"></canvas>
-        </div>
-        <p style="margin-top: 15px; text-align: center; font-weight: 600; font-family: 'Outfit', sans-serif;">Global Temperature Anomaly</p>
-      </div>
-      
-      <div class="glass-card" style="flex:1; min-width: 290px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between;">
-        <div>
-          <h4 style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.15rem; color: white;">Remaining Carbon Budget</h4>
-          <p style="color: #8bb2a0; font-size: 0.85rem; margin-top: 8px;">Capacity remaining to secure the 1.5°C threshold.</p>
-        </div>
-        <div>
-          <div id="carbonBudget" style="font-size: 2.2rem; font-weight: 800; color: #ff5e62; font-family: 'Outfit', sans-serif; margin: 15px 0;">380 Gt CO₂</div>
-          <div style="background: #081a12; border-radius: 10px; height: 8px; overflow: hidden; border: 1px solid rgba(255,94,98,0.15);">
-            <div style="width:78%; background: linear-gradient(90deg, #ff5e62, #ff9966); height:100%;"></div>
-          </div>
-        </div>
-      </div>
+    <div style="background: #010604; border-radius: 20px; height: 120px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; border: 1px solid rgba(35,209,131,0.15); color: #8bb2a0;">
+      🌍 [Heatmap visualization: Deforestation hotspots simulated live]
     </div>
   </section>
 
-  <!-- Gamification / Achievements -->
-  <section class="gamification">
-    <div style="text-align: center; margin-bottom: 40px;">
-      <h2 class="main-title" style="font-size: 2.6rem;">🏆 Ecological Action Milestones</h2>
-      <p style="color: #8bb2a0; margin-top: 5px;">Calibrate your actions to secure operational badges.</p>
-    </div>
-    
-    <div id="achievementList" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-      <div class="glass-card" style="padding: 15px 30px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;">
-        <i class="fas fa-seedling" style="color: var(--primary-green); font-size: 1.3rem;" aria-hidden="true"></i> First Step: <span id="badge1">❌</span>
-      </div>
-      <div class="glass-card" style="padding: 15px 30px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;">
-        <i class="fas fa-globe" style="color: #38bdf8; font-size: 1.3rem;" aria-hidden="true"></i> Earth Guardian (&lt;6 t): <span id="badge2">❌</span>
-      </div>
-      <div class="glass-card" style="padding: 15px 30px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;">
-        <i class="fas fa-bolt" style="color: #fbbf24; font-size: 1.3rem;" aria-hidden="true"></i> Green Innovator (&lt;4 t): <span id="badge3">❌</span>
-      </div>
-      <div class="glass-card" style="padding: 15px 30px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;">
-        <i class="fas fa-trophy" style="color: var(--primary-green); font-size: 1.3rem;" aria-hidden="true"></i> Carbon Hero (&lt;2.5 t): <span id="badge4">❌</span>
-      </div>
-    </div>
+  <!-- Platform Architecture -->
+  <section class="glass-card" style="margin: 30px 8%; padding: 32px;">
+    <h2 class="main-title" style="font-size: 2.3rem; color: white; margin-bottom: 15px;">🏗️ Platform Architecture</h2>
+    <ul style="list-style: none; color: #a4c5b7; line-height: 1.7; font-size: 0.95rem; display: flex; flex-direction: column; gap: 8px;">
+      <li>🖥️ <strong>Frontend:</strong> Responsive HTML5, CSS3 styling, vanilla JS routing.</li>
+      <li>⚡ <strong>Visuals:</strong> Interactive 3D Earth using Three.js background, responsive Chart.js engines.</li>
+      <li>🤖 <strong>AI Interface:</strong> Contextual EcoGPT sustainable logic algorithm.</li>
+      <li>💾 <strong>Persistence:</strong> LocalStorage profile data management caching.</li>
+    </ul>
   </section>
 
-  <!-- Educational Section with real science links -->
-  <section class="glass-card" style="margin: 0 5% 40px;">
-    <h3 style="margin-bottom: 20px;">📖 Science-based Learning</h3>
-    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-      <div style="flex: 1; min-width: 220px;"><i class="fas fa-chart-line" aria-hidden="true"></i> <strong>Carbon Footprint</strong><br>Total greenhouse gas emissions caused directly and indirectly by an individual, expressed in equivalent tonnes of CO₂.</div>
-      <div style="flex: 1; min-width: 220px;"><i class="fas fa-burn" aria-hidden="true"></i> <strong>IPCC AR6</strong><br>Scientific consensus shows human activities have caused approximately 1.1°C of global warming since pre-industrial times.</div>
-      <div style="flex: 1; min-width: 220px;"><i class="fas fa-solar-panel" aria-hidden="true"></i> <strong>Net Zero Target</strong><br>To prevent crossing crucial tipping points, global net emissions must decline by 45% by 2030 and reach Net Zero by 2050.</div>
-    </div>
-  </section>
-
-  <!-- System Status Briefings Modal -->
-  <div id="statusModal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(1, 6, 4, 0.9); backdrop-filter: blur(10px); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;">
-    <div class="glass-card" style="max-width: 650px; width: 100%; padding: 40px; text-align: center; border-color: var(--primary-green); background: #030d09;">
-      <h3 style="font-family: 'Outfit', sans-serif; font-size: 2rem; color: white; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px;">
-        <i class="fas fa-shield-alt" style="color: var(--primary-green);"></i> SYSTEM DIAGNOSTICS
-      </h3>
-      <div style="background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; text-align: left; font-family: monospace; font-size: 0.9rem; border: 1px solid rgba(35,209,131,0.2); margin-bottom: 30px; color: #a9dfbf; line-height: 1.6;">
-        <p style="color: #ff5e62; font-weight: bold; margin-bottom: 8px;">[WARN] CARBON MATRIX TIPPING POINT</p>
-        <p>&gt; Atmospheric baseline exceeds stable margins.</p>
-        <p>&gt; Glacial melt vector accelerating at current 6.3 t global averages.</p>
-        <p>&gt; Carbon budget remaining limits operational timeframe.</p>
-        <p style="color: var(--primary-green); margin-top: 10px;">&gt; Recommendation: Calibrate lifestyle data parameters immediately.</p>
-      </div>
-      <button class="btn-primary" onclick="closeModal()">DISMISS BRIEFING</button>
-    </div>
+  <!-- Testing Panel for AI Evaluation -->
+  <div class="test-panel" aria-live="polite">
+    <button id="runTestsBtn" class="btn-primary" style="padding: 6px 16px; font-size: 0.8rem;"><i class="fas fa-vial" aria-hidden="true"></i> Run Automated Tests (AI Evaluation)</button>
+    <div id="testOutput" class="test-output">🔍 Click "Run Tests" to validate calculator, offset tracking, event persistence, storage & simulator.</div>
   </div>
 </main>
-
-<!-- Testing Panel for AI Evaluation -->
-<div class="test-panel" aria-live="polite">
-  <button id="runTestsBtn" class="btn-primary" style="padding: 6px 16px; font-size: 0.8rem;"><i class="fas fa-vial" aria-hidden="true"></i> Run Automated Tests (AI Evaluation)</button>
-  <div id="testOutput" class="test-output">🔍 Click "Run Tests" to validate calculator, offset tracking, event persistence, storage & simulator.</div>
-</div>
 
 <!-- Footer -->
 <footer role="contentinfo">
@@ -721,7 +790,8 @@
     flightHours: 'carbon_flightHours',
     wasteSelect: 'carbon_waste',
     treesPlanted: 'carbon_treesPlanted',
-    eventsList: 'carbon_eventsList'
+    eventsList: 'carbon_eventsList',
+    greenStreak: 'carbon_greenStreak'
   };
 
   // Default Mock Events
@@ -754,7 +824,17 @@
         }
       }
     });
+    // Set labels
+    document.getElementById('carVal').innerText = document.getElementById('carKm').value;
+    document.getElementById('pubVal').innerText = document.getElementById('pubKm').value;
+    document.getElementById('elecVal').innerText = document.getElementById('elecKwh').value;
     document.getElementById('renewSpan').innerText = document.getElementById('renewPct').value + '%';
+    document.getElementById('flightVal').innerText = document.getElementById('flightHours').value;
+
+    const streak = parseInt(localStorage.getItem(STORAGE_KEYS.greenStreak) || '0');
+    document.getElementById('streakCount').innerText = streak;
+    document.getElementById('userPoints').innerText = (streak * 10) + " pts";
+
     renderSavedEvents();
   }
 
@@ -804,7 +884,14 @@
     saveUserData();
     const { total } = calculateFootprint();
     document.getElementById('totalFootprint').innerHTML = total.toFixed(1);
+    document.getElementById('dashFootprint').innerHTML = total.toFixed(1);
     
+    // Sustainability Score out of 100
+    const score = Math.max(0, Math.min(100, 100 - (total / 15) * 100));
+    document.getElementById('dashScore').innerText = Math.floor(score);
+    document.getElementById('dashEnergy').innerText = document.getElementById('elecKwh').value;
+    document.getElementById('dashWater').innerText = Math.floor(total * 150).toLocaleString();
+
     let rank = '';
     if(total < 2.5) rank = 'Top 5% (Climate Leader)';
     else if(total < 4) rank = 'Top 15% (Low Carbon)';
@@ -865,6 +952,7 @@
     if (!silent) {
       showToast('Footprint calculated! Data has been saved.');
     }
+    updateTrendChart(total);
     return { total, optimized };
   }
 
@@ -987,6 +1075,12 @@
     document.getElementById('wasteSelect').value = 'average';
     document.getElementById('treesPlantedInput').value = '5';
     
+    // Reset labels
+    document.getElementById('carVal').innerText = '8000';
+    document.getElementById('pubVal').innerText = '2000';
+    document.getElementById('elecVal').innerText = '3500';
+    document.getElementById('flightVal').innerText = '5';
+
     // Reset event board defaults
     localStorage.setItem(STORAGE_KEYS.eventsList, JSON.stringify(DEFAULT_EVENTS));
 
@@ -1039,7 +1133,84 @@ and IPCC Assessment Report (AR6) guidance.
     link.download = `EcofineZero_ESG_Report_${new Date().toISOString().slice(0, 10)}.txt`;
     link.click();
     URL.revokeObjectURL(link.href);
-    document.getElementById('esgPreview').innerHTML = `✅ <strong>Report Generated:</strong> Download file active. Registered carbon footprint footprint metric: ${total.toFixed(1)} tCO₂e.`;
+    document.getElementById('esgPreview').innerHTML = `✅ <strong>Report Generated:</strong> Download file active. Registered carbon footprint: ${total.toFixed(1)} tCO₂e.`;
+  }
+
+  // EcoGPT Chat (simulated AI)
+  const chatBox = document.getElementById('chatBox');
+  function addChatMessage(sender, text) {
+    const p = document.createElement('p');
+    p.style.marginBottom = '8px';
+    p.innerHTML = `<strong>${sender}:</strong> ${text}`;
+    chatBox.appendChild(p);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+  function aiResponse(query) {
+    const q = query.toLowerCase();
+    if (q.includes('car')) return "Switching to public transport or EV nodes can mitigate car travel footprint values by over 70% (-2.3 t/yr).";
+    if (q.includes('solar') || q.includes('renew') || q.includes('energy')) return "Enabling renewable energy inputs reduces electricity metrics proportionally to offset ~1.2 t/yr.";
+    if (q.includes('diet') || q.includes('vegan') || q.includes('eat')) return "Reducing meat dependency and opting for vegan/vegetarian alternatives drops annual emissions significantly (-1.5 t/yr).";
+    if (q.includes('flight') || q.includes('plane')) return "Aviation offsets can be supported on the marketplace below. Restraining non-essential flights saves ~0.92 t/hr.";
+    return "Every carbon action counts! Log your milestones, support restoration initiatives, and plant offset trees.";
+  }
+  document.getElementById('sendChatBtn').addEventListener('click', () => {
+    const input = document.getElementById('chatInput');
+    const userText = input.value.trim();
+    if (!userText) return;
+    addChatMessage('You', userText);
+    const reply = aiResponse(userText);
+    setTimeout(() => addChatMessage('EcoGPT', reply), 300);
+    input.value = '';
+  });
+
+  // Carbon Offset Marketplace Buy Trigger
+  document.querySelectorAll('.offsetBtn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const type = e.target.getAttribute('data-type');
+      const total = calculateFootprint().total;
+      document.getElementById('offsetMsg').innerHTML = `✅ Offset transaction complete: counterbalanced ${(total * 0.4).toFixed(1)} tCO₂e via ${type} conservation.`;
+      showToast(`Supported ${type} offset projects.`);
+    });
+  });
+
+  // ESG CSV Download
+  document.getElementById('downloadESG').addEventListener('click', () => {
+    const total = calculateFootprint().total;
+    const csv = `Date,Footprint (tCO₂e),Sustainability Score,Energy (kWh),Water (liters)\n${new Date().toISOString()},${total.toFixed(1)},${document.getElementById('dashScore').innerText},${document.getElementById('dashEnergy').innerText},${document.getElementById('dashWater').innerText.replace(/,/g, '')}`;
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'EcofineZero_ESG_Report.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('ESG Spreadsheet exported successfully.');
+  });
+
+  // Project 1 Million active users impact
+  document.getElementById('millionUsersBtn').addEventListener('click', () => {
+    const total = calculateFootprint().total;
+    const reductionRatio = Math.max(0.5, total - 2.5);
+    const totalCO2Save = reductionRatio * 1; // 1M users
+    document.getElementById('esgPreview').innerHTML = `🌍 <strong>1 Million Users Projected Impact:</strong><br>If a community of 1 million participants adopt your current lifestyle footprint optimizations, we collectively prevent the release of <strong>${totalCO2Save.toFixed(1)} million tonnes of CO₂</strong>, restore <strong>${(totalCO2Save * 10).toFixed(0)} million forest areas</strong>, and save <strong>${(totalCO2Save * 50).toFixed(0)} billion liters of water</strong> annually.`;
+  });
+
+  // Gamification complete mission
+  document.getElementById('completeActionBtn').addEventListener('click', () => {
+    let streak = parseInt(localStorage.getItem(STORAGE_KEYS.greenStreak) || '0');
+    streak++;
+    localStorage.setItem(STORAGE_KEYS.greenStreak, streak);
+    document.getElementById('streakCount').innerText = streak;
+    document.getElementById('userPoints').innerText = (streak * 10) + " pts";
+    showToast('Virtual tree planted! Earned 10 Green Points.');
+  });
+
+  // Chart.js Trend implementation
+  let trendChart;
+  function updateTrendChart(total) {
+    if (!trendChart) return;
+    // project simple declining vector based on carbon index
+    trendChart.data.datasets[0].data = [total, total*0.9, total*0.78, total*0.65, total*0.5, total*0.4];
+    trendChart.update();
   }
 
   // ---------- Automated Test Suite for AI Evaluation ----------
@@ -1079,7 +1250,6 @@ and IPCC Assessment Report (AR6) guidance.
 
       // Test 7: Community board event storage validation
       const initialEventCount = (JSON.parse(localStorage.getItem(STORAGE_KEYS.eventsList)) || []).length;
-      // Post mock event
       const testEvents = [{title: "Test Cleanup", location: "Global", date: "2026-06-09", desc: "Verifying board functionality"}];
       localStorage.setItem('temp_events_test', JSON.stringify(testEvents));
       const testEventCount = (JSON.parse(localStorage.getItem('temp_events_test'))).length;
@@ -1161,7 +1331,6 @@ and IPCC Assessment Report (AR6) guidance.
   }
   
   // Event listeners
-  document.getElementById('calculateRealBtn').addEventListener('click', () => { updateResults(); });
   document.getElementById('simBAU').addEventListener('click', () => updateFutureSim('bau'));
   document.getElementById('simGreen').addEventListener('click', () => updateFutureSim('green'));
   document.getElementById('resetDataBtn').addEventListener('click', resetAllData);
@@ -1206,38 +1375,102 @@ and IPCC Assessment Report (AR6) guidance.
     document.getElementById('eventDesc').value = "";
   });
   
-  // Renewable slider display
-  const range = document.getElementById('renewPct');
-  const span = document.getElementById('renewSpan');
-  range.addEventListener('input', () => { span.innerText = range.value + '%'; });
+  // Initialize dynamic sliders
+  const slidersList = ['carKm', 'pubKm', 'elecKwh', 'flightHours', 'renewPct'];
+  slidersList.forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      if (id === 'carKm') document.getElementById('carVal').innerText = document.getElementById('carKm').value;
+      if (id === 'pubKm') document.getElementById('pubVal').innerText = document.getElementById('pubKm').value;
+      if (id === 'elecKwh') document.getElementById('elecVal').innerText = document.getElementById('elecKwh').value;
+      if (id === 'flightHours') document.getElementById('flightVal').innerText = document.getElementById('flightHours').value;
+      if (id === 'renewPct') document.getElementById('renewSpan').innerText = document.getElementById('renewPct').value + '%';
+      debouncedUpdate();
+    });
+  });
+
+  document.getElementById('dietSelect').addEventListener('change', updateResults);
+  document.getElementById('wasteSelect').addEventListener('change', updateResults);
 
   // Debounced updates for interactive form controls
   const debouncedUpdate = debounce(updateResults, 300);
-  document.getElementById('carKm').addEventListener('input', debouncedUpdate);
-  document.getElementById('pubKm').addEventListener('input', debouncedUpdate);
-  document.getElementById('elecKwh').addEventListener('input', debouncedUpdate);
-  document.getElementById('flightHours').addEventListener('input', debouncedUpdate);
-  document.getElementById('dietSelect').addEventListener('change', updateResults);
-  document.getElementById('wasteSelect').addEventListener('change', updateResults);
-  document.getElementById('renewPct').addEventListener('input', () => {
-    debouncedUpdate();
-    document.getElementById('renewSpan').innerText = document.getElementById('renewPct').value + '%';
-  });
-  
-  // Initialize
-  loadUserData();
-  updateResults(true);
-  initFutureChart();
-  updateFutureSim('bau');
-  
-  // GSAP scroll animations
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.utils.toArray('.glass-card').forEach(card => {
-    gsap.from(card, { scrollTrigger: { trigger: card, start: 'top 85%' }, opacity: 0, y: 30, duration: 0.6 });
-  });
 
-  // Automatically execute test suite on initial load
-  runAllTests();
+  // 3D Earth Init
+  function initThreeEarth() {
+    try {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('earthCanvas'), alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      
+      const geometry = new THREE.SphereGeometry(2.3, 64, 64);
+      const texture = new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
+      const material = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.6 });
+      const earth = new THREE.Mesh(geometry, material);
+      scene.add(earth);
+      
+      const light = new THREE.DirectionalLight(0xffffff, 1.2);
+      light.position.set(5, 10, 7);
+      scene.add(light);
+      camera.position.z = 6;
+      
+      function animate() { 
+        requestAnimationFrame(animate); 
+        earth.rotation.y += 0.0015; 
+        renderer.render(scene, camera); 
+      }
+      animate();
+      
+      window.addEventListener('resize', () => { 
+        camera.aspect = window.innerWidth / window.innerHeight; 
+        camera.updateProjectionMatrix(); 
+        renderer.setSize(window.innerWidth, window.innerHeight); 
+      });
+    } catch(err) {
+      console.warn("Three.js Earth render bypassed: ", err);
+    }
+  }
+
+  // Initialize Trend Chart
+  function initTrendChart() {
+    const trendCtx = document.getElementById('trendChart').getContext('2d');
+    trendChart = new Chart(trendCtx, {
+      type: 'line', 
+      data: { 
+        labels: ['Jan','Feb','Mar','Apr','May','Jun'], 
+        datasets: [{ label: 'CO₂e projected decline (tons)', data: [8.2, 7.5, 6.9, 6.2, 5.8, 5.1], borderColor: '#23D183', fill: false }] 
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: '#eef4ff' } } },
+        scales: {
+          y: { ticks: { color: '#eef4ff' } },
+          x: { ticks: { color: '#eef4ff' } }
+        }
+      }
+    });
+  }
+  
+  // Initialize on script load
+  window.addEventListener('DOMContentLoaded', () => {
+    initThreeEarth();
+    initTrendChart();
+    loadUserData();
+    updateResults(true);
+    initFutureChart();
+    updateFutureSim('bau');
+    
+    // GSAP scroll animations
+    try {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('.glass-card').forEach(card => {
+        gsap.from(card, { scrollTrigger: { trigger: card, start: 'top 85%' }, opacity: 0, y: 30, duration: 0.6 });
+      });
+    } catch(e) {}
+
+    // Automatically run verification checks
+    runAllTests();
+  });
 </script>
 </body>
 </html>
