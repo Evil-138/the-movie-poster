@@ -206,7 +206,7 @@
   </div>
   <div id="futureSimResult" class="mt-4 p-4 glass-card" style="background: #051610;">
     <p id="futureText" style="margin-bottom: 15px;">Select a scenario to see projected global temperature rise, sea level, and air quality impact based on your choices.</p>
-    <div style="max-height: 250px; position: relative;">
+    <div style="height: 240px; position: relative; width: 100%;">
       <canvas id="futureChart"></canvas>
     </div>
   </div>
@@ -216,8 +216,18 @@
 <section>
   <h2 class="text-center" style="margin-bottom: 30px;">📈 Real-time Climate Indicators (Global Data)</h2>
   <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    <div class="glass-card" style="flex:1; min-width: 280px; padding: 20px;"><canvas id="co2GlobalChart" height="150"></canvas><p style="margin-top: 10px; text-align: center;">Atmospheric CO₂ (Mauna Loa trend)</p></div>
-    <div class="glass-card" style="flex:1; min-width: 280px; padding: 20px;"><canvas id="tempAnomalyChart" height="150"></canvas><p style="margin-top: 10px; text-align: center;">Global Temp Anomaly (°C vs 1951-1980)</p></div>
+    <div class="glass-card" style="flex:1; min-width: 280px; padding: 20px; display: flex; flex-direction: column;">
+      <div style="position: relative; height: 180px; width: 100%;">
+        <canvas id="co2GlobalChart"></canvas>
+      </div>
+      <p style="margin-top: 10px; text-align: center;">Atmospheric CO₂ (Mauna Loa trend)</p>
+    </div>
+    <div class="glass-card" style="flex:1; min-width: 280px; padding: 20px; display: flex; flex-direction: column;">
+      <div style="position: relative; height: 180px; width: 100%;">
+        <canvas id="tempAnomalyChart"></canvas>
+      </div>
+      <p style="margin-top: 10px; text-align: center;">Global Temp Anomaly (°C vs 1951-1980)</p>
+    </div>
     <div class="glass-card" style="flex:1; min-width: 280px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
       <div>
         <h4>Remaining Carbon Budget</h4>
