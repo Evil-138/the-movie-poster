@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Carbon Zero: The Last Chance – Real Carbon Footprint Platform</title>
+  <title>Ecofine Zero | Carbon Footprint Platform</title>
   <meta name="description" content="A scientifically accurate carbon footprint calculator with real emission factors. Understand your climate impact and get actionable reduction strategies.">
   <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Bebas+Neue&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -19,8 +19,17 @@
       padding: 0;
       box-sizing: border-box;
     }
+    :root {
+      --primary-green: #23d183;
+      --accent-green: #86f3b7;
+      --dark-green: #0a251a;
+      --forest-green: #071f14;
+      --bg-light-green: #ecfdf5;
+      --card-bg: rgba(6, 26, 18, 0.85);
+      --glass-border: rgba(35, 209, 131, 0.25);
+    }
     body {
-      background-color: #050505;
+      background-color: #030a07;
       font-family: 'Inter', sans-serif;
       color: #eef4ff;
       overflow-x: hidden;
@@ -30,135 +39,263 @@
       font-family: 'Bebas Neue', cursive;
       letter-spacing: 2px;
     }
+    .main-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(3, 10, 7, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(35, 209, 131, 0.15);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 8%;
+    }
+    .nav-links a {
+      color: #a0c0b2;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-right: 25px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--primary-green);
+    }
     .glass-card {
-      background: rgba(10, 20, 20, 0.7);
+      background: var(--card-bg);
       backdrop-filter: blur(12px);
       border-radius: 28px;
-      border: 1px solid rgba(0, 255, 153, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
       transition: all 0.3s ease;
     }
     .glass-card:hover {
-      border-color: #00FF99;
-      box-shadow: 0 0 18px rgba(0, 255, 153, 0.2);
+      border-color: var(--primary-green);
+      box-shadow: 0 0 22px rgba(35, 209, 131, 0.25);
     }
     .btn-primary {
-      background: linear-gradient(135deg, #00FF99, #00D4FF);
+      background: linear-gradient(135deg, var(--primary-green), #00d4ff);
       border: none;
-      color: #050505;
+      color: #030a07;
       font-weight: bold;
-      padding: 12px 28px;
+      font-family: 'Outfit', sans-serif;
+      padding: 14px 32px;
       border-radius: 40px;
       font-size: 1rem;
       transition: transform 0.2s, box-shadow 0.2s;
       cursor: pointer;
     }
     .btn-primary:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 12px #00FF99;
+      transform: scale(1.03);
+      box-shadow: 0 0 15px var(--primary-green);
     }
     .btn-outline {
       background: transparent;
-      border: 2px solid #00FF99;
-      color: #00FF99;
+      border: 2px solid var(--primary-green);
+      color: var(--primary-green);
+      font-family: 'Outfit', sans-serif;
+    }
+    .btn-outline:hover {
+      background: rgba(35, 209, 131, 0.1);
     }
     input, select {
-      background: #1a1f1e;
-      border: 1px solid #2c4a3e;
+      background: #061510;
+      border: 1px solid #143829;
       border-radius: 40px;
-      padding: 8px 16px;
+      padding: 10px 20px;
       color: white;
       width: 100%;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: var(--primary-green);
     }
     .info-badge {
-      background: #0f2120;
+      background: #071c13;
       border-radius: 20px;
       padding: 6px 12px;
       font-size: 0.75rem;
-      color: #88ffcc;
+      color: var(--accent-green);
       cursor: help;
-      margin-top: 5px;
+      margin-top: 6px;
       display: inline-block;
     }
     .mb-3 {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
     section {
-      padding: 80px 5%;
+      padding: 100px 8%;
       position: relative;
       z-index: 2;
     }
-    .hero {
-      min-height: 90vh;
+    
+    /* Ecofine Organic Hero Banner styling */
+    .hero-banner {
+      min-height: 85vh;
+      background: linear-gradient(135deg, #092f1d 0%, #030f0a 100%);
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      background: radial-gradient(circle at 20% 30%, #001a12, #010101);
+      overflow: hidden;
     }
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(35, 209, 131, 0.15) 0%, transparent 70%);
+      top: -100px;
+      left: -100px;
+      pointer-events: none;
+    }
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(35, 209, 131, 0.12) 0%, transparent 70%);
+      bottom: -150px;
+      right: -100px;
+      pointer-events: none;
+    }
+    .leaf-shape-left {
+      position: absolute;
+      left: -5%;
+      top: 15%;
+      width: 28%;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .circles-shape-right {
+      position: absolute;
+      right: -5%;
+      bottom: 10%;
+      width: 25%;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
     .result-dashboard {
-      background: rgba(0, 20, 15, 0.85);
+      background: rgba(4, 20, 14, 0.9);
     }
     footer {
-      background: #020a07;
+      background: #010604;
       text-align: center;
-      padding: 32px;
+      padding: 40px;
       font-size: 0.85rem;
-      border-top: 1px solid #00FF9933;
+      border-top: 1px solid rgba(35, 209, 131, 0.15);
+      color: #6d8a7c;
     }
-    @media (max-width: 768px) {
-      section { padding: 50px 20px; }
+    @media (max-width: 992px) {
       .row { flex-direction: column; }
+      .leaf-shape-left, .circles-shape-right { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- Hero Section with Movie Poster Vibe but serious tone -->
-<section class="hero">
-  <div class="hero-content" style="max-width: 900px; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); border-radius: 48px; padding: 40px 30px;">
-    <h1 style="font-size: clamp(2.8rem, 10vw, 5.5rem); letter-spacing: 4px;">CARBON ZERO<br><span style="font-size: 0.5em; color:#00FF99;">THE LAST CHANCE</span></h1>
-    <p style="font-size: 1.2rem; margin: 20px 0;">Measurable. Transparent. Actionable.<br>Real emission factors based on IPCC & EPA data.</p>
-    <button class="btn-primary" id="scrollToCalcBtn"><i class="fas fa-chart-line"></i> Calculate Your Real Footprint</button>
+<!-- Ecofine Styled Header -->
+<header>
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 2C8.28 2 2 8.28 2 16C2 23.72 8.28 30 16 30C23.72 30 30 23.72 30 16C30 8.28 23.72 2 16 2ZM20.88 14.88C18.66 17.1 15.12 18.66 12 18C13.2 21 16.5 22.8 19.5 21C22.5 19.2 22.8 15 20.88 14.88ZM11.12 17.12C13.34 14.9 16.88 13.34 20 14C18.8 11 15.5 9.2 12.5 11C9.5 12.8 9.2 17 11.12 17.12Z" fill="#23D183"/>
+    </svg>
+    <span style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; color: white;">Ecofine<span style="color: var(--primary-green);">Zero</span></span>
+  </div>
+  <div style="display: flex; align-items: center;">
+    <nav class="nav-links">
+      <a href="#">Home</a>
+      <a href="#calculator-section">Calculator</a>
+      <a href="#simulator">Simulator</a>
+    </nav>
+    <button class="btn-primary" onclick="document.getElementById('calculator-section').scrollIntoView({behavior:'smooth'})" style="padding: 10px 24px; font-size: 0.85rem;">CALCULATE NOW</button>
+  </div>
+</header>
+
+<!-- Ecofine Green Hero Banner -->
+<section class="hero-banner">
+  <!-- SVG organic Leaf decoration left -->
+  <svg class="leaf-shape-left" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 180C70 180 180 140 180 30C120 70 80 110 10 180Z" fill="#23D183"/>
+    <path d="M40 180C90 150 140 110 160 50" stroke="#23D183" stroke-width="3"/>
+    <path d="M90 140C110 120 130 110 140 100" stroke="#23D183" stroke-width="2"/>
+    <path d="M60 160C80 140 90 135 100 130" stroke="#23D183" stroke-width="2"/>
+  </svg>
+  
+  <!-- SVG circles background decoration right -->
+  <svg class="circles-shape-right" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="10" fill="#23D183" fill-opacity="0.6"/>
+    <circle cx="50" cy="30" r="15" fill="#23D183" fill-opacity="0.4"/>
+    <circle cx="80" cy="20" r="8" fill="#23D183" fill-opacity="0.7"/>
+    <circle cx="30" cy="70" r="12" fill="#23D183" fill-opacity="0.5"/>
+    <circle cx="70" cy="65" r="18" fill="#23D183" fill-opacity="0.3"/>
+  </svg>
+
+  <div class="hero-content" style="max-width: 950px; text-align: center; z-index: 5; padding: 0 20px;">
+    <p style="color: var(--accent-green); font-weight: 600; letter-spacing: 2px; font-size: 0.95rem; margin-bottom: 20px; text-transform: uppercase;">Ecology & Sustainability Platform</p>
+    <h1 class="main-title" style="font-size: clamp(2.8rem, 8vw, 5.2rem); line-height: 1.1; margin-bottom: 25px;">
+      Preserving the Earth for<br>Future Generations
+    </h1>
+    <p style="font-size: 1.25rem; max-width: 750px; margin: 0 auto 40px; color: #a2c4b5; line-height: 1.6;">
+      Calculate your real carbon footprint using IPCC & EPA data models, simulate environmental outcomes, and start your roadmap to net-zero carbon impact.
+    </p>
+    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+      <button class="btn-primary" onclick="document.getElementById('calculator-section').scrollIntoView({behavior:'smooth'})">VIEW CALCULATOR</button>
+      <button class="btn-primary btn-outline" id="watchTrailerBtn">SYSTEM STATUS</button>
+    </div>
   </div>
 </section>
 
-<!-- Scientific Explanation: Real logic intro -->
-<section class="glass-card" style="margin: 0 5% 40px; text-align: center;">
-  <h3><i class="fas fa-microscope"></i> How Our Calculator Works – Real Emission Factors</h3>
-  <p style="max-width: 800px; margin: 15px auto;">Every calculation uses verified coefficients: <strong>car travel: 0.192 kg CO₂e/km</strong> (EPA), <strong>electricity: 0.45 kg/kWh (national avg mix)</strong>, <strong>beef-heavy diet: +2.7 tCO₂e/year</strong> (Poore & Nemecek), <strong>flight: 0.25 kg CO₂e/passenger-km</strong>. Results are annualised and comparable to climate science benchmarks.</p>
+<!-- Scientific Explanation -->
+<section class="glass-card" style="margin: 0 8% 40px; text-align: center; background: rgba(5, 22, 15, 0.7); border-color: rgba(35, 209, 131, 0.2);">
+  <h3 style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.6rem; color: white; margin-bottom: 10px;">
+    <i class="fas fa-seedling" style="color: var(--primary-green); margin-right: 8px;"></i> Scientific Calculation Framework
+  </h3>
+  <p style="max-width: 850px; margin: 15px auto 0; color: #a4c5b7; line-height: 1.6;">
+    Our calculator utilizes verified, peer-reviewed coefficients: gasoline transport averages <strong>0.192 kg CO₂e/km</strong> (EPA), standard utility electrical generation grids average <strong>0.45 kg/kWh</strong>, nutritional profiles scale up to <strong>3.8 tonnes CO₂e/year</strong> for heavy meat-based profiles, and short-haul flights equate to <strong>200 kg CO₂e per hour</strong>.
+  </p>
 </section>
 
-<!-- CARBON FOOTPRINT CALCULATOR – Real logic with detailed inputs -->
-<section id="calculator-section">
-  <div class="text-center mb-4">
-    <h2 style="font-size: 2.8rem;">📊 Carbon Footprint Analyzer</h2>
-    <p>Fill in your real lifestyle data → Get precise CO₂e emissions + reduction roadmap</p>
+<!-- CALCULATOR SECTION -->
+<section id="calculator-section" style="background: radial-gradient(circle at 10% 20%, #03120b, #010403 80%);">
+  <div style="text-align: center; margin-bottom: 60px;">
+    <h2 class="main-title" style="font-size: clamp(2.3rem, 5vw, 3.6rem);">📊 Carbon Footprint Analyzer</h2>
+    <p style="color: #8bb2a0; margin-top: 10px;">Input your metrics to calculate actual annual emissions and receive recommendations.</p>
   </div>
-  <div class="row" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+  
+  <div class="row" style="display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: center; max-width: 1200px; margin: 0 auto;">
     <!-- Inputs Card -->
-    <div class="glass-card" style="flex: 1.2; min-width: 300px; padding: 28px;">
-      <h3><i class="fas fa-pencil-alt"></i> Your Lifestyle Data</h3>
+    <div class="glass-card" style="flex: 1.2; min-width: 300px; padding: 32px;">
+      <h3 style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 25px; border-bottom: 1px solid rgba(35, 209, 131, 0.15); padding-bottom: 10px; color: var(--primary-green);">
+        <i class="fas fa-sliders-h"></i> Input Parameters
+      </h3>
       
-      <div class="mb-3"><label><i class="fas fa-car"></i> 🚗 Car (km/year)</label>
-        <input type="number" id="carKm" value="8000" step="500" placeholder="km per year">
-        <div class="info-badge" title="EPA: 0.192 kg CO₂e per km for average gasoline car">ⓘ Real factor: 0.192 kg/km</div>
+      <div class="mb-3"><label>🚗 Car Travel (km/year)</label>
+        <input type="number" id="carKm" value="8000" step="500">
+        <div class="info-badge">ⓘ Real factor: 0.192 kg CO₂e per km</div>
       </div>
-      <div class="mb-3"><label><i class="fas fa-bus"></i> 🚌 Public Transport (km/year)</label>
-        <input type="number" id="pubKm" value="2000" step="500" placeholder="bus/train km">
-        <div class="info-badge" title="Average bus: 0.089 kg/km per passenger">ⓘ 0.089 kg CO₂e/km</div>
+      <div class="mb-3"><label>🚌 Public Transport (km/year)</label>
+        <input type="number" id="pubKm" value="2000" step="500">
+        <div class="info-badge">ⓘ Average bus/rail: 0.089 kg CO₂e/km</div>
       </div>
-      <div class="mb-3"><label><i class="fas fa-charging-station"></i> ⚡ Electricity (kWh/year)</label>
-        <input type="number" id="elecKwh" value="3500" step="200" placeholder="kWh per year">
-        <div class="info-badge" title="US average grid: 0.45 kg CO₂e/kWh">ⓘ 0.45 kg/kWh (can lower with renewables)</div>
+      <div class="mb-3"><label>⚡ Electricity Consumption (kWh/year)</label>
+        <input type="number" id="elecKwh" value="3500" step="200">
+        <div class="info-badge">ⓘ Regional average mix: 0.45 kg CO₂e/kWh</div>
       </div>
-      <div class="mb-3"><label>🌿 Renewable Energy %</label>
+      <div class="mb-3"><label>🌿 Renewable Utility Share %</label>
         <input type="range" id="renewPct" min="0" max="100" value="20">
-        <span id="renewSpan">20%</span>
+        <span id="renewSpan" style="font-family: 'Outfit', sans-serif; font-weight: 600; color: var(--primary-green); margin-left: 8px;">20%</span>
         <div class="info-badge">Reduces electricity emissions proportionally</div>
       </div>
-      <div class="mb-3"><label><i class="fas fa-utensils"></i> 🍽️ Diet Pattern</label>
+      <div class="mb-3"><label>🍽️ Diet Pattern</label>
         <select id="dietSelect">
           <option value="vegan">Vegan (0.7 tCO₂e/year)</option>
           <option value="vegetarian">Vegetarian (1.1 t)</option>
@@ -166,108 +303,153 @@
           <option value="meat">Heavy meat/beef (3.8 t)</option>
         </select>
       </div>
-      <div class="mb-3"><label><i class="fas fa-plane"></i> ✈️ Flight (hours/year)</label>
-        <input type="number" id="flightHours" value="5" step="1" placeholder="hours in air">
-        <div class="info-badge">Short-haul: 0.25 kg CO₂e/km avg ~ 800 km/h → 200 kg CO₂e/hour</div>
+      <div class="mb-3"><label>✈️ Annual Flights (hours/year)</label>
+        <input type="number" id="flightHours" value="5" step="1">
+        <div class="info-badge">Avg: 200 kg CO₂e per hour</div>
       </div>
-      <div class="mb-3"><label>♻️ Waste & Recycling</label>
+      <div class="mb-3"><label>♻️ Circularity & Recycling</label>
         <select id="wasteSelect">
           <option value="good">High recycling, low waste (-0.3 t offset)</option>
           <option value="average" selected>Average landfill (0 t adjustment)</option>
           <option value="poor">Poor recycling (+0.5 t methane)</option>
         </select>
       </div>
-      <button id="calculateRealBtn" class="btn-primary w-100 mt-3"><i class="fas fa-chart-simple"></i> Calculate My Carbon Footprint</button>
+      <button id="calculateRealBtn" class="btn-primary w-100 mt-3" style="font-size: 1.05rem;">CALCULATE IMPACT</button>
     </div>
 
     <!-- Results Dashboard -->
-    <div class="glass-card result-dashboard" style="flex: 1.5; min-width: 320px; padding: 28px;">
-      <h3><i class="fas fa-tachometer-alt"></i> Your Impact (tCO₂e/year)</h3>
+    <div class="glass-card result-dashboard" style="flex: 1.5; min-width: 320px; padding: 32px;">
+      <h3 style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 25px; border-bottom: 1px solid rgba(35, 209, 131, 0.15); padding-bottom: 10px; color: var(--primary-green);">
+        <i class="fas fa-chart-pie"></i> Dynamic Output Console
+      </h3>
       <div id="realResults">
-        <p><strong>🌍 Total Carbon Footprint:</strong> <span id="totalFootprint" class="neon-text" style="font-size: 2rem; color:#00FF99;">—</span> tonnes CO₂e</p>
-        <p><strong>📊 Global Ranking:</strong> <span id="globalRanking">—</span> (compared to world avg 6.3 t per capita)</p>
-        <div style="background:#222; border-radius: 20px; height: 12px; margin: 15px 0;"><div id="impactBar" style="width:0%; background:#00FF99; height:12px; border-radius:20px;"></div></div>
-        <p><strong>⭐ Sustainability Rating:</strong> <span id="sustainLabel">—</span></p>
-        <hr style="border-color: #00FF9944; margin: 20px 0;">
-        <h4>🤖 AI-Driven Reduction Plan</h4>
-        <div id="realRecommendations" style="margin-top: 10px; line-height: 1.6;">Click calculate to see personalised actions with exact reduction potentials.</div>
-        <div id="optimizedFuture" class="mt-3" style="background:#0a2a20; border-radius: 20px; padding: 12px; font-weight: 600;"></div>
+        <p style="font-size: 1.1rem; color: #a4c5b7;"><strong>🌍 Total Carbon Footprint:</strong></p>
+        <p style="margin: 10px 0;"><span id="totalFootprint" style="font-size: 3rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary-green);">—</span> <span style="font-size: 1.2rem; color: #a4c5b7;">tonnes CO₂e / yr</span></p>
+        
+        <p style="margin-top: 20px;"><strong>📊 Global Standing:</strong> <span id="globalRanking" style="font-weight: 600; color: #fff;">—</span></p>
+        
+        <div style="background:#071c13; border-radius: 20px; height: 12px; margin: 20px 0; overflow: hidden; border: 1px solid rgba(35,209,131,0.15);">
+          <div id="impactBar" style="width:0%; background: linear-gradient(90deg, var(--primary-green), #00d4ff); height:12px; border-radius:20px; transition: width 0.8s ease;"></div>
+        </div>
+        
+        <p><strong>⭐ Sustainability Rating:</strong> <span id="sustainLabel" style="font-weight: 600; color: var(--accent-green);">—</span></p>
+        <hr style="border-color: rgba(35, 209, 131, 0.15); margin: 30px 0;">
+        
+        <h4 style="font-family: 'Outfit', sans-serif; font-weight: 600; color: white; display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-brain" style="color: var(--primary-green);"></i> Actionable Optimization Plan
+        </h4>
+        <div id="realRecommendations" style="margin-top: 15px; line-height: 1.7; color: #a0c2b2; font-size: 0.95rem;">
+          Click calculate to generate recommended operations.
+        </div>
+        <div id="optimizedFuture" class="mt-4" style="background: rgba(35, 209, 131, 0.08); border-radius: 20px; padding: 16px; font-weight: 600; border: 1px solid rgba(35, 209, 131, 0.15); font-family: 'Outfit', sans-serif;"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Future Simulator – uses real footprint -->
-<section class="glass-card" style="margin: 30px 5%;">
-  <h2 class="text-center">🔮 Fast Forward to 2050 – Your Choice</h2>
-  <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
-    <button id="simBAU" class="btn-primary btn-outline">🔴 Business As Usual (your current path)</button>
-    <button id="simGreen" class="btn-primary">🟢 Carbon Zero Pathway (optimised actions)</button>
+<!-- Future Simulator -->
+<section id="simulator" class="glass-card" style="margin: 30px 8%; background: linear-gradient(135deg, rgba(6,26,18,0.95) 0%, rgba(3,10,7,0.95) 100%);">
+  <h2 class="main-title text-center" style="font-size: 2.6rem; margin-bottom: 15px;">🔮 Fast Forward to 2050</h2>
+  <p style="text-align: center; color: #8bb2a0; max-width: 600px; margin: 0 auto 30px; line-height: 1.5;">
+    Simulate environmental vectors in the mid-century scenario depending on your action plan.
+  </p>
+  
+  <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;">
+    <button id="simBAU" class="btn-primary btn-outline" style="font-size: 0.9rem; padding: 12px 24px;">🔴 Business As Usual</button>
+    <button id="simGreen" class="btn-primary" style="font-size: 0.9rem; padding: 12px 24px;">🟢 Carbon Zero Pathway</button>
   </div>
-  <div id="futureSimResult" class="mt-4 p-4 glass-card" style="background: #051610;">
-    <p id="futureText" style="margin-bottom: 15px;">Select a scenario to see projected global temperature rise, sea level, and air quality impact based on your choices.</p>
-    <div style="height: 240px; position: relative; width: 100%;">
+  
+  <div id="futureSimResult" class="p-4" style="background: rgba(3, 10, 7, 0.5); border-radius: 20px; border: 1px solid rgba(35,209,131,0.15);">
+    <p id="futureText" style="margin-bottom: 20px; color: #a4c5b7; text-align: center; font-size: 1rem;">
+      Select a scenario above to simulate global warming levels, sea level changes, and air quality metrics.
+    </p>
+    <div style="height: 250px; position: relative; width: 100%;">
       <canvas id="futureChart"></canvas>
     </div>
   </div>
 </section>
 
-<!-- Real-time Climate Dashboard (science-driven) -->
-<section>
-  <h2 class="text-center" style="margin-bottom: 30px;">📈 Real-time Climate Indicators (Global Data)</h2>
-  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    <div class="glass-card" style="flex:1; min-width: 280px; padding: 20px; display: flex; flex-direction: column;">
+<!-- Real-time Climate Dashboard -->
+<section style="background: linear-gradient(to bottom, #030a07, #010403);">
+  <div style="text-align: center; margin-bottom: 50px;">
+    <h2 class="main-title" style="font-size: 2.6rem; margin-bottom: 10px;">📈 Global Environmental Monitors</h2>
+    <p style="color: #8bb2a0;">Realtime updates on carbon levels, surface temperature anomaly, and remaining budgets.</p>
+  </div>
+  
+  <div style="display: flex; flex-wrap: wrap; gap: 30px; max-width: 1200px; margin: 0 auto;">
+    <div class="glass-card" style="flex:1; min-width: 290px; padding: 25px; display: flex; flex-direction: column;">
       <div style="position: relative; height: 180px; width: 100%;">
         <canvas id="co2GlobalChart"></canvas>
       </div>
-      <p style="margin-top: 10px; text-align: center;">Atmospheric CO₂ (Mauna Loa trend)</p>
+      <p style="margin-top: 15px; text-align: center; font-weight: 600; font-family: 'Outfit', sans-serif;">Atmospheric CO₂ Trends</p>
     </div>
-    <div class="glass-card" style="flex:1; min-width: 280px; padding: 20px; display: flex; flex-direction: column;">
+    
+    <div class="glass-card" style="flex:1; min-width: 290px; padding: 25px; display: flex; flex-direction: column;">
       <div style="position: relative; height: 180px; width: 100%;">
         <canvas id="tempAnomalyChart"></canvas>
       </div>
-      <p style="margin-top: 10px; text-align: center;">Global Temp Anomaly (°C vs 1951-1980)</p>
+      <p style="margin-top: 15px; text-align: center; font-weight: 600; font-family: 'Outfit', sans-serif;">Global Temperature Anomaly</p>
     </div>
-    <div class="glass-card" style="flex:1; min-width: 280px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+    
+    <div class="glass-card" style="flex:1; min-width: 290px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between;">
       <div>
-        <h4>Remaining Carbon Budget</h4>
-        <p style="color: #88ffcc; font-size: 0.9rem; margin-top: 10px;">For 67% chance of keeping warming below 1.5°C</p>
+        <h4 style="font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.15rem; color: white;">Remaining Carbon Budget</h4>
+        <p style="color: #8bb2a0; font-size: 0.85rem; margin-top: 8px;">Capacity remaining to secure the 1.5°C threshold.</p>
       </div>
       <div>
-        <div id="carbonBudget" style="font-size: 1.8rem; font-weight: bold; color: #ff5555; margin: 15px 0;">380 Gt CO₂</div>
-        <div style="background: #222; border-radius: 10px; height: 8px; overflow: hidden;">
-          <div style="width:78%; background:#FF4444; height:100%;"></div>
+        <div id="carbonBudget" style="font-size: 2.2rem; font-weight: 800; color: #ff5e62; font-family: 'Outfit', sans-serif; margin: 15px 0;">380 Gt CO₂</div>
+        <div style="background: #081a12; border-radius: 10px; height: 8px; overflow: hidden; border: 1px solid rgba(255,94,98,0.15);">
+          <div style="width:78%; background: linear-gradient(90deg, #ff5e62, #ff9966); height:100%;"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Gamification with real achievement logic -->
+<!-- Gamification / Achievements -->
 <section class="gamification">
-  <h2 class="text-center neon-text">🏆 Climate Hero Achievements</h2>
-  <div id="achievementList" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 30px;">
-    <div class="glass-card" style="padding: 12px 24px;"><i class="fas fa-seedling"></i> First Step: <span id="badge1">❌</span></div>
-    <div class="glass-card" style="padding: 12px 24px;"><i class="fas fa-globe"></i> Earth Guardian (&lt;6 t): <span id="badge2">❌</span></div>
-    <div class="glass-card" style="padding: 12px 24px;"><i class="fas fa-bolt"></i> Green Innovator (&lt;4 t): <span id="badge3">❌</span></div>
-    <div class="glass-card" style="padding: 12px 24px;"><i class="fas fa-trophy"></i> Carbon Zero Hero (&lt;2.5 t): <span id="badge4">❌</span></div>
+  <div style="text-align: center; margin-bottom: 40px;">
+    <h2 class="main-title" style="font-size: 2.6rem;">🏆 Ecological Action Milestones</h2>
+    <p style="color: #8bb2a0; margin-top: 5px;">Calibrate your actions to secure operational badges.</p>
+  </div>
+  
+  <div id="achievementList" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+    <div class="glass-card" style="padding: 15px 30px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;">
+      <i class="fas fa-seedling" style="color: var(--primary-green); font-size: 1.3rem;"></i> Initial Step: <span id="badge1">❌</span>
+    </div>
+    <div class="glass-card" style="padding: 15px 30px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;">
+      <i class="fas fa-globe" style="color: #38bdf8; font-size: 1.3rem;"></i> Earth Guardian (&lt;6 t): <span id="badge2">❌</span>
+    </div>
+    <div class="glass-card" style="padding: 15px 30px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;">
+      <i class="fas fa-bolt" style="color: #fbbf24; font-size: 1.3rem;"></i> Green Innovator (&lt;4 t): <span id="badge3">❌</span>
+    </div>
+    <div class="glass-card" style="padding: 15px 30px; display: flex; align-items: center; gap: 12px; font-weight: 600; font-family: 'Outfit', sans-serif;">
+      <i class="fas fa-trophy" style="color: var(--primary-green); font-size: 1.3rem;"></i> Carbon Hero (&lt;2.5 t): <span id="badge4">❌</span>
+    </div>
   </div>
 </section>
 
-<!-- Educational Section with real science links -->
-<section class="glass-card" style="margin: 0 5% 40px;">
-  <h3 style="margin-bottom: 20px;">📖 Science-based Learning</h3>
-  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    <div style="flex: 1; min-width: 220px;"><i class="fas fa-chart-line"></i> <strong>Carbon Footprint</strong><br>Total greenhouse gas emissions caused directly and indirectly by an individual, expressed in equivalent tonnes of CO₂.</div>
-    <div style="flex: 1; min-width: 220px;"><i class="fas fa-burn"></i> <strong>IPCC AR6</strong><br>Scientific consensus shows human activities have caused approximately 1.1°C of global warming since pre-industrial times.</div>
-    <div style="flex: 1; min-width: 220px;"><i class="fas fa-solar-panel"></i> <strong>Net Zero Target</strong><br>To prevent crossing crucial tipping points, global net emissions must decline by 45% by 2030 and reach Net Zero by 2050.</div>
+<!-- System Status Briefings Modal (Briefing popup) -->
+<div id="statusModal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(1, 6, 4, 0.9); backdrop-filter: blur(10px); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px;">
+  <div class="glass-card" style="max-width: 650px; width: 100%; padding: 40px; text-align: center; border-color: var(--primary-green); background: #030d09;">
+    <h3 style="font-family: 'Outfit', sans-serif; font-size: 2rem; color: white; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+      <i class="fas fa-shield-alt" style="color: var(--primary-green);"></i> SYSTEM DIAGNOSTICS
+    </h3>
+    <div style="background: rgba(0,0,0,0.5); border-radius: 16px; padding: 20px; text-align: left; font-family: monospace; font-size: 0.9rem; border: 1px solid rgba(35,209,131,0.2); margin-bottom: 30px; color: #a9dfbf; line-height: 1.6;">
+      <p style="color: #ff5e62; font-weight: bold; margin-bottom: 8px;">[WARN] CARBON MATRIX TIPPING POINT</p>
+      <p>&gt; Atmospheric baseline exceeds stable margins.</p>
+      <p>&gt; Glacial melt vector accelerating at current 6.3 t global averages.</p>
+      <p>&gt; Carbon budget remaining limits operational timeframe.</p>
+      <p style="color: var(--primary-green); margin-top: 10px;">&gt; Recommendation: Calibrate lifestyle data parameters immediately.</p>
+    </div>
+    <button class="btn-primary" onclick="closeModal()">DISMISS BRIEFING</button>
   </div>
-</section>
+</div>
 
 <!-- Footer -->
 <footer>
-  <p>🌱 Carbon Zero: The Last Chance – Real emission factors | Data source references: EPA, IPCC, Our World in Data</p>
-  <p style="margin-top: 10px; color: #557766;">Hack2Skill Movie Poster Theme | Open-source climate action platform</p>
+  <p>🌱 Ecofine Zero | Scientifically Accurate Climate Metric Calculations | Data: IPCC, EPA, Our World in Data</p>
+  <p style="margin-top: 12px; font-size: 0.8rem; opacity: 0.6;">Hack2Skill Movie Poster Theme adaptation. Preserving the Earth.</p>
 </footer>
 
 <script>
@@ -370,7 +552,7 @@
         labels: ['Temp Rise (°C)', 'Sea Level (cm)', 'Air Quality Index'], 
         datasets: [
           { label: 'Current Vector', data: [3.2, 65, 85], backgroundColor: '#c44536' }, 
-          { label: 'Carbon Zero Path', data: [1.2, 22, 35], backgroundColor: '#00FF99' }
+          { label: 'Carbon Zero Path', data: [1.2, 22, 35], backgroundColor: '#23D183' }
         ] 
       },
       options: { 
@@ -425,7 +607,7 @@
     type: 'line', 
     data: { 
       labels: ['2015','2020','2025','2030'], 
-      datasets: [{ label: 'CO₂ ppm', data: [400, 414, 427, 440], borderColor: '#00FF99', fill: false }] 
+      datasets: [{ label: 'CO₂ ppm', data: [400, 414, 427, 440], borderColor: '#23D183', fill: false }] 
     },
     options: {
       responsive: true,
@@ -456,11 +638,17 @@
     }
   });
   
-  document.getElementById('carbonBudget').innerHTML = '380 Gt CO₂';
+  // Modal functions
+  const modal = document.getElementById('statusModal');
+  document.getElementById('watchTrailerBtn').addEventListener('click', () => {
+    modal.style.display = 'flex';
+  });
+  function closeModal() {
+    modal.style.display = 'none';
+  }
   
   // Event listeners
   document.getElementById('calculateRealBtn').addEventListener('click', () => { updateResults(); });
-  document.getElementById('scrollToCalcBtn').addEventListener('click', () => { document.getElementById('calculator-section').scrollIntoView({behavior:'smooth'}); });
   document.getElementById('simBAU').addEventListener('click', () => updateFutureSim('bau'));
   document.getElementById('simGreen').addEventListener('click', () => updateFutureSim('green'));
   
@@ -474,7 +662,7 @@
   updateResults();
   updateFutureSim('bau');
   
-  // GSAP scroll animations (cinematic but lightweight)
+  // GSAP scroll animations
   gsap.registerPlugin(ScrollTrigger);
   gsap.utils.toArray('.glass-card').forEach(card => {
     gsap.from(card, { scrollTrigger: { trigger: card, start: 'top 85%' }, opacity: 0, y: 30, duration: 0.6 });
